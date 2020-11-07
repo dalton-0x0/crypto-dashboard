@@ -1,6 +1,8 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { AppContext } from './AppProvider';
+import {color3} from '../Shared/Styles';
+
 
 const Bar = styled.div`
     display: grid;
@@ -15,7 +17,7 @@ const Logo = styled.div`
 const ControlButtonElem = styled.div`
     cursor: pointer;
     ${props => props.active && css`
-        color: #0cff00;
+        color: ${color3};
     `}
 `
 const toProperCase = (lower) => {
