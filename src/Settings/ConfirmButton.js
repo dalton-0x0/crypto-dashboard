@@ -4,7 +4,7 @@ import {AppContext} from '../App/AppProvider';
 import {fontSize1, greenBoxShadow, color3} from '../Shared/Styles';
 
 const ConfirmButtonStyled = styled.div`
-    margin: 20px;
+    margin: 40px 20px;
     color: ${color3};
     ${fontSize1};
     padding: 5px;
