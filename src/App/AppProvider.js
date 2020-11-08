@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
+import _ from 'lodash';
 
 const cc = require('cryptocompare');
 cc.setApiKey('1c9084c0df6351552bdf1389c8eba6b7747f104731de281ee1652d50454531df');
 
 export const AppContext = React.createContext();
+
+const MAX_FAVORITES = 10;
 
 export class AppProvider extends Component {
     constructor(props){
@@ -11,8 +14,12 @@ export class AppProvider extends Component {
         this.state = {
             page: 'dashboard',
             setPage: this.setPage,
+            favorites: ['BTC', 'ETH', 'PPC'],
             ...this.savedSettings(),
             confirmFavorites: this.confirmFavorites,
+            addCoin: this.addCoin,
+            removeCoin: this.removeCoin,
+            isInFavorites: this.isInFavorites,
         }
     }
     componentDidMount = () => {
@@ -22,21 +29,37 @@ export class AppProvider extends Component {
         let coinList = (await cc.coinList()).Data;
         this.setState({coinList});
     }
+    addCoin = (key) => {
+        let favorites = [...this.state.favorites];
+        if(favorites.length < MAX_FAVORITES){
+            favorites.push(key);
+            this.setState({favorites});
+        }
+    }
+    removeCoin = (key) => {
+        let favorites = [...this.state.favorites];
+        this.setState({favorites: _.pull(favorites, key)})
+    }
+
+    isInFavorites = (key) => _.includes(this.state.favorites, key);
+
     confirmFavorites = () => {
         this.setState({
             firstVisit: false,
             page: 'dashboard'
         });
         localStorage.setItem('cryptoDash', JSON.stringify({
-            test: 'hello'
+            favorites: this.state.favorites
         }))
     }
     savedSettings = () => {
         let cryptoDashData = JSON.parse(localStorage.getItem('cryptoDash'));
         if (!cryptoDashData) {
             return {page: 'settings', firstVisit: true}
-        } 
-        return {}
+        } else {
+            const {favorites} = cryptoDashData;
+            return {favorites}
+        }
     }
     setPage = (page) => this.setState({page})
 
