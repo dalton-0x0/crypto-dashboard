@@ -21,13 +21,13 @@ const getCoinsToDisplay = (coinList, topSection, favorites, filteredCoins) => {
 const CoinGrid = ({topSection}) => {
     return (
         <AppContext.Consumer>
-            {({coinList, favorites, filteredCoins}) => 
+            {({coinList, favorites, filteredCoins}) => (
                 <CoinGridStyled>
                     {getCoinsToDisplay(coinList, topSection, favorites, filteredCoins).map(coinKey => 
                         <CoinTile topSection={topSection} coinKey={coinKey} key={coinKey}/>
                     )}
                 </CoinGridStyled>
-            }
+            )}
         </AppContext.Consumer>
     );
 }
