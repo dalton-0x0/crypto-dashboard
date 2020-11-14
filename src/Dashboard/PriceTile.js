@@ -95,5 +95,5 @@ const PriceTileComponent = ({price, index}) => {
         </AppContext.Consumer>
      );
 }
- 
+
 export default PriceTileComponent;
