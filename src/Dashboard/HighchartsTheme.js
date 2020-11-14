@@ -1,3 +1,5 @@
+import {lightTheme} from '../Shared/Styles';
+
 export const HighchartsTheme = {
     colors: ['#61D936', 
             '#552CCB', 
@@ -8,11 +10,11 @@ export const HighchartsTheme = {
             '#F376C1', 
             '#1B2839'],
         chart: {
-            backgroundColor: '#061A44',
+            backgroundColor: lightTheme ? 'white' : '#061A44',
             borderColor: '#000000',
             borderWidth: 0,
             className: 'dark-container',
-            plotBackgroundColor: '#061A44',
+            plotBackgroundColor: lightTheme ? 'white' : '#061A44',
             plotBorderWidth: 0
         },
         title: {

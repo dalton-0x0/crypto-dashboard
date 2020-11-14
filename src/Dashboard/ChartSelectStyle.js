@@ -4,8 +4,9 @@ import {backgroundColor2, fontSize2} from '../Shared/Styles';
 export default styled.select`
     ${backgroundColor2};
     ${fontSize2};
-    color: #1163C9;
-    border: 1px solid;
+    color: #C0C0C0;
+    font-family: 'Do Hyeon';
+    border: none;
     width: 100px;
     float: right;
     outline: none;
