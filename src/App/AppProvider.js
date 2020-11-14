@@ -16,6 +16,7 @@ export class AppProvider extends Component {
         this.state = {
             page: 'dashboard',
             favorites: ['BTC', 'ETH', 'PPC', 'XMR', 'DOGE'],
+            timeInterval: 'months',
             ...this.savedSettings(),
             setPage: this.setPage,
             addCoin: this.addCoin,
@@ -24,6 +25,7 @@ export class AppProvider extends Component {
             confirmFavorites: this.confirmFavorites,
             setCurrentFavorite: this.setCurrentFavorite,
             setFilteredCoins: this.setFilteredCoins,
+            changeChartSelect: this.changeChartSelect,
         }
     }
     componentDidMount = () => {
@@ -48,7 +50,7 @@ export class AppProvider extends Component {
             {
                 name: this.state.currentFavorite,
                 data: results.map((result, index) => [
-                    moment().subtract({months: TIME_UNITS - index}).valueOf(),
+                    moment().subtract({[this.state.timeInterval]: TIME_UNITS - index}).valueOf(),
                     result.USD
                 ])
             }
@@ -72,7 +74,7 @@ export class AppProvider extends Component {
         let promises = [];
         for (let units = TIME_UNITS; units > 0; units--) {
             promises.push(
-                cc.priceHistorical(this.state.currentFavorite, ['USD'], moment().subtract({months: units}).toDate()
+                cc.priceHistorical(this.state.currentFavorite, ['USD'], moment().subtract({[this.state.timeInterval]: units}).toDate()
                 )
             )
         }
@@ -133,6 +135,11 @@ export class AppProvider extends Component {
     setPage = (page) => this.setState({page})
 
     setFilteredCoins = (filteredCoins) => this.setState({filteredCoins})
+
+    changeChartSelect = (value) => {
+        console.log("value", value)
+        this.setState({timeInterval: value, historical: null}, this.fetchHistorical)
+    }
 
     render(){
         return (
